@@ -59,3 +59,268 @@
 
 
 </body>
+
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Grid Layout</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            background: #fafafa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .portfolio-item {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+        
+        .item-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .item-image.tall {
+            height: 350px;
+        }
+        
+        .item-image.wide {
+            height: 200px;
+        }
+        
+        .item-content {
+            padding: 1.5rem;
+        }
+        
+        .item-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .item-description {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .item-meta {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .filter-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+        
+        .filter-tab {
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .filter-tab.active,
+        .filter-tab:hover {
+            background: #333;
+            color: white;
+            border-color: #333;
+        }
+        
+        .page-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        
+        .page-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            .filter-tabs {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-title">Portfolio</h1>
+        <p class="page-subtitle">Explorations in bio-art and technological interfaces</p>
+        
+        <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="all">All</button>
+            <button class="filter-tab" data-filter="installations">Installations</button>
+            <button class="filter-tab" data-filter="research">Research</button>
+            <button class="filter-tab" data-filter="collaborations">Collaborations</button>
+        </div>
+        
+        <div class="portfolio-grid" id="portfolioGrid">
+            <div class="portfolio-item" data-category="installations">
+                <div class="item-image tall">
+                    <span>Earthlink</span>
+                </div>
+                <div class="item-content">
+                    <h3 class="item-title">Earthlink</h3>
+                    <p class="item-description">Interactive installation exploring connections between organic matter and digital networks.</p>
+                    <div class="item-meta">Installation • 2023</div>
+                </div>
+            </div>
+            
+            <div class="portfolio-item" data-category="research">
+                <div class="item-image">
+                    <span>Soil Networks</span>
+                </div>
+                <div class="item-content">
+                    <h3 class="item-title">Mycorrhizal Networks</h3>
+                    <p class="item-description">Research into fungal communication systems and their parallels to digital networks.</p>
+                    <div class="item-meta">Research • 2022</div>
+                </div>
+            </div>
+            
+            <div class="portfolio-item" data-category="collaborations">
+                <div class="item-image wide">
+                    <span>Bio-Interface</span>
+                </div>
+                <div class="item-content">
+                    <h3 class="item-title">Living Interfaces</h3>
+                    <p class="item-description">Collaborative work on bio-responsive technological interfaces.</p>
+                    <div class="item-meta">Collaboration • 2023</div>
+                </div>
+            </div>
+            
+            <div class="portfolio-item" data-category="installations">
+                <div class="item-image">
+                    <span>Metabolic</span>
+                </div>
+                <div class="item-content">
+                    <h3 class="item-title">Planetary Metabolisms</h3>
+                    <p class="item-description">Site-specific installation addressing environmental entanglements.</p>
+                    <div class="item-meta">Installation • 2022</div>
+                </div>
+            </div>
+            
+            <div class="portfolio-item" data-category="research">
+                <div class="item-image tall">
+                    <span>Posthuman</span>
+                </div>
+                <div class="item-content">
+                    <h3 class="item-title">Posthuman Conditions</h3>
+                    <p class="item-description">Theoretical research into the intersection of biological and digital systems.</p>
+                    <div class="item-meta">Research • 2021</div>
+                </div>
+            </div>
+            
+            <div class="portfolio-item" data-category="installations">
+                <div class="item-image">
+                    <span>Necropolitics</span>
+                </div>
+                <div class="item-content">
+                    <h3 class="item-title">Digital Necropolitics</h3>
+                    <p class="item-description">Installation examining death and decay in digital contexts.</p>
+                    <div class="item-meta">Installation • 2023</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const filterTabs = document.querySelectorAll('.filter-tab');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+        
+        filterTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                filterTabs.forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                const filterValue = tab.getAttribute('data-filter');
+                
+                portfolioItems.forEach(item => {
+                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                        item.style.display = 'block';
+                        item.style.animation = 'fadeIn 0.5s ease';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Add CSS animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
