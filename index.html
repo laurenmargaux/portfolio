@@ -1,266 +1,260 @@
-<html land="en">
-  <head>
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.8/lib/p5.js"></script>
-    <style>
-        img {
-            width: 100%
-        }
-
-        video {
-            width: 100%
-        }
-
-        audio {
-            width: 100%
-        }
-
-        h1 {
-            padding: 10px;
-            border-radius: 10px;
-            border: 2px solid black;
-            font-style: italic;
-        }
-
-        @font-face {
-            font-family: Futura;
-            src: url('futura.ttf');
-        }
-
-        * {
-            font-family: "Futura"
-        }
-    </style>
-</head>
-
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Grid Layout</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            background: #fafafa;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        
-        .portfolio-item {
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .portfolio-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-        }
-        
-        .item-image {
-            width: 100%;
-            height: 250px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .item-image.tall {
-            height: 350px;
-        }
-        
-        .item-image.wide {
-            height: 200px;
-        }
-        
-        .item-content {
-            padding: 1.5rem;
-        }
-        
-        .item-title {
-            font-size: 1.2rem;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            color: #333;
-        }
-        
-        .item-description {
-            color: #666;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-        
-        .item-meta {
-            margin-top: 1rem;
-            font-size: 0.8rem;
-            color: #999;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        
-        .filter-tabs {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            justify-content: center;
-        }
-        
-        .filter-tab {
-            padding: 0.5rem 1rem;
-            background: transparent;
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-        }
-        
-        .filter-tab.active,
-        .filter-tab:hover {
-            background: #333;
-            color: white;
-            border-color: #333;
-        }
-        
-        .page-title {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 300;
-            margin-bottom: 1rem;
-            color: #333;
-        }
-        
-        .page-subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 2rem;
-        }
-        
-        @media (max-width: 768px) {
-            .portfolio-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            
-            .container {
-                padding: 1rem;
-            }
-            
-            .filter-tabs {
-                flex-wrap: wrap;
-                gap: 0.5rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Grid Layout</title>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.8/lib/p5.js"></script>
+  <style>
+    /* Reset & global */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      background: #fafafa;
+      color: #333;
+    }
+
+    img, video, audio {
+      width: 100%;
+      display: block;
+    }
+
+    h1 {
+      padding: 10px;
+      border-radius: 10px;
+      border: 2px solid black;
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* Titles */
+    .page-title {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+
+    .page-subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 2rem;
+    }
+
+    /* Portfolio grid */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .portfolio-item {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .portfolio-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .item-image {
+      width: 100%;
+      height: 250px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .item-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .item-content {
+      padding: 1.5rem;
+    }
+
+    .item-title {
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .item-description {
+      color: #666;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .item-meta {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Filter Tabs */
+    .filter-tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .filter-tab {
+      padding: 0.5rem 1rem;
+      background: transparent;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .filter-tab.active,
+    .filter-tab:hover {
+      background: #333;
+      color: white;
+      border-color: #333;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    footer a {
+      display: inline-block;
+      margin-bottom: 0.5rem;
+      color: #333;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .container {
+        padding: 1rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="page-title">Portfolio</h1>
-        <p class="page-subtitle">Artist Statement</p>
-        
-        <div class="filter-tabs">
-            <button class="filter-tab active" data-filter="all">All</button>
-            <button class="filter-tab" data-filter="installations">Installations</button>
-            <button class="filter-tab" data-filter="research">Research</button>
-            <button class="filter-tab" data-filter="collaborations">Collaborations</button>
-        </div>
-        
-        <div class="portfolio-grid" id="portfolioGrid">
-            <div class="portfolio-item" data-category="installations">
-                <div class="item-image">
-    <img src="saltsilk.jpeg">
-                    
-                </div>
-                <div class="item-content">
-                    <h3 class="item-title">Salt & Silk</h3>
-                    <p class="item-description">Recycled glass beads bound together with knotted silk ribbon engolfing the beads. Inspired by the repition of the waves rolling over the sandy beaches of Southern California. </p>
-                    <div class="item-meta">Necklace • 2024</div>
-                </div>
-            </div>
-            
-            <div class="portfolio-item" data-category="research">
-                <div class="item-image">
-                    <img src="petal.jpeg">
-                </div>
-                <div class="item-content">
-                    <h3 class="item-title">Petal</h3>
-                    <p class="item-description">Sturdy, heavy, silver.</p>
-                    <div class="item-meta">Work-in-Progress • 2025</div>
-                </div>
-            </div>
-        </div>
+  <div class="container">
+    <h1 class="page-title">Portfolio</h1>
+    <p class="page-subtitle">Artist Statement</p>
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs">
+      <button class="filter-tab active" data-filter="all">All</button>
+      <button class="filter-tab" data-filter="installations">Installations</button>
+      <button class="filter-tab" data-filter="research">Research</button>
+      <button class="filter-tab" data-filter="collaborations">Collaborations</button>
     </div>
 
-    <body>
-    <script src="sketch.js"></script>
-    <footer>
-      <a href="https://www.instagram.com/laurenmargauxx/">Business Instagram</a>
-    <footer>
-        <p>©2025 Lauren Stammnitz </p>
-    </footer>
+    <!-- Portfolio Grid -->
+    <div class="portfolio-grid" id="portfolioGrid">
+      <div class="portfolio-item" data-category="installations">
+        <div class="item-image">
+          <img src="saltsilk.jpeg" alt="Salt & Silk necklace made with recycled glass beads and silk ribbon">
+        </div>
+        <div class="item-content">
+          <h3 class="item-title">Salt & Silk</h3>
+          <p class="item-description">Recycled glass beads bound together with knotted silk ribbon engulfing the beads. Inspired by the repetition of the waves rolling over the sandy beaches of Southern California.</p>
+          <div class="item-meta">Necklace • 2024</div>
+        </div>
+      </div>
 
+      <div class="portfolio-item" data-category="research">
+        <div class="item-image">
+          <img src="petal.jpeg" alt="Silver jewelry piece titled Petal, work in progress.">
+        </div>
+        <div class="item-content">
+          <h3 class="item-title">Petal</h3>
+          <p class="item-description">Sturdy, heavy, silver.</p>
+          <div class="item-meta">Work-in-Progress • 2025</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-</body>
+  <!-- Footer -->
+  <footer>
+    <a href="https://www.instagram.com/laurenmargauxx/" target="_blank">Business Instagram</a>
+    <p>©2025 Lauren Stammnitz</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="sketch.js"></script>
+  <script>
+    const filterTabs = document.querySelectorAll('.filter-tab');
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
     
-    <script>
-        const filterTabs = document.querySelectorAll('.filter-tab');
-        const portfolioItems = document.querySelectorAll('.portfolio-item');
+    filterTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        filterTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
         
-        filterTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                // Remove active class from all tabs
-                filterTabs.forEach(t => t.classList.remove('active'));
-                // Add active class to clicked tab
-                tab.classList.add('active');
-                
-                const filterValue = tab.getAttribute('data-filter');
-                
-                portfolioItems.forEach(item => {
-                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
-                        item.style.display = 'block';
-                        item.style.animation = 'fadeIn 0.5s ease';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-            });
+        const filterValue = tab.getAttribute('data-filter');
+        
+        portfolioItems.forEach(item => {
+          if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+            item.style.display = 'block';
+            item.style.animation = 'fadeIn 0.5s ease';
+          } else {
+            item.style.display = 'none';
+          }
         });
-        
-        // Add CSS animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(20px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
+      });
+    });
+    
+    // Add CSS animation dynamically
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
 </body>
 </html>
