@@ -5,177 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portfolio Grid Layout</title>
   <script src="https://cdn.jsdelivr.net/npm/p5@1.11.8/lib/p5.js"></script>
-  <style>
-    /* Reset & global */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      line-height: 1.6;
-      background: #fafafa;
-      color: #333;
-    }
-
-    img, video, audio {
-      width: 100%;
-      display: block;
-    }
-
-    h1 {
-      padding: 10px;
-      border-radius: 10px;
-      border: 2px solid black;
-      font-style: italic;
-      margin-bottom: 1rem;
-    }
-
-    /* Container */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 2rem;
-    }
-
-    /* Titles */
-    .page-title {
-      text-align: center;
-      font-size: 2.5rem;
-      font-weight: 300;
-      margin-bottom: 1rem;
-    }
-
-    .page-subtitle {
-      text-align: center;
-      color: #666;
-      margin-bottom: 2rem;
-    }
-
-    /* Portfolio grid */
-    .portfolio-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    .portfolio-item {
-      background: white;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-
-    .portfolio-item:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-    }
-
-    .item-image {
-      width: 100%;
-      height: 250px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .item-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .item-content {
-      padding: 1.5rem;
-    }
-
-    .item-title {
-      font-size: 1.2rem;
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-    }
-
-    .item-description {
-      color: #666;
-      font-size: 0.9rem;
-      line-height: 1.5;
-    }
-
-    .item-meta {
-      margin-top: 1rem;
-      font-size: 0.8rem;
-      color: #999;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    /* Filter Tabs */
-    .filter-tabs {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 2rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .filter-tab {
-      padding: 0.5rem 1rem;
-      background: transparent;
-      border: 1px solid #ddd;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 0.9rem;
-    }
-
-    .filter-tab.active,
-    .filter-tab:hover {
-      background: #333;
-      color: white;
-      border-color: #333;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      margin-top: 3rem;
-      padding: 1rem;
-      font-size: 0.9rem;
-      color: #666;
-    }
-
-    footer a {
-      display: inline-block;
-      margin-bottom: 0.5rem;
-      color: #333;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .portfolio-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-
-      .container {
-        padding: 1rem;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container">
@@ -194,7 +24,7 @@
     <div class="portfolio-grid" id="portfolioGrid">
       <div class="portfolio-item" data-category="installations">
         <div class="item-image">
-          <img src="saltsilk.jpeg" alt="Salt & Silk necklace made with recycled glass beads and silk ribbon">
+          <img src="images/saltsilk.jpeg" alt="Salt & Silk necklace made with recycled glass beads and silk ribbon">
         </div>
         <div class="item-content">
           <h3 class="item-title">Salt & Silk</h3>
@@ -205,7 +35,7 @@
 
       <div class="portfolio-item" data-category="research">
         <div class="item-image">
-          <img src="petal.jpeg" alt="Silver jewelry piece titled Petal, work in progress.">
+          <img src="images/petal.jpeg" alt="Silver jewelry piece titled Petal, work in progress.">
         </div>
         <div class="item-content">
           <h3 class="item-title">Petal</h3>
