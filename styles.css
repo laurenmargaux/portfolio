@@ -65,10 +65,6 @@ img, video, audio {
 }
 
 h1 {
-  padding: 10px;
-  border-radius: 10px;
-  border: 2px solid black;
-  font-style: italic;
   margin-bottom: 1rem;
 }
 
@@ -85,7 +81,7 @@ h1 {
   font-weight: 300;
   margin: 3rem 0 2rem 0;
   color: #2c3e50;
-  text-align: left;
+  text-align: center;
   letter-spacing: 1px;
 }
 
@@ -99,9 +95,9 @@ h1 {
 
 .portfolio-item {
   background: white;
-  border-radius: 0;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
   cursor: pointer;
   border: none;
@@ -109,8 +105,8 @@ h1 {
 }
 
 .portfolio-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
 }
 
 .item-image {
@@ -132,6 +128,7 @@ h1 {
 
 .item-content {
   padding: 1.5rem 0;
+  text-align: center;
 }
 
 .item-title {
@@ -147,6 +144,9 @@ h1 {
   font-size: 0.9rem;
   line-height: 1.6;
   margin-bottom: 0.5rem;
+  max-width: 280px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .item-meta {
