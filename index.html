@@ -51,6 +51,28 @@
           <div class="item-meta">Work-in-Progress • 2025</div>
         </div>
       </div>
+
+      <div class="portfolio-item" data-category="research">
+        <div class="item-image">
+          <img src="images/mold.jpeg" alt="A mini silicone mold made from a 3D printed flower rendered in Fusion 360.">
+        </div>
+        <div class="item-content">
+          <h3 class="item-title">Silicone Mold</h3>
+          <p class="item-description">A mini silicone mold. Made from a 3D printed flower that was rendered in Fusion 360.</p>
+          <div class="item-meta">Prototype • 2025</div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-category="research">
+        <div class="item-image">
+          <img src="images/pot.jpeg" alt="A mini pot holder made from plywood using Fusion 360 and a laser cutter with lap joints.">
+        </div>
+        <div class="item-content">
+          <h3 class="item-title">Mini Pot Holder</h3>
+          <p class="item-description">A mini pot holder made from plywood. My first CAD project made in Fusion 360 then sent to a laser cutter. Lap joints to make it sturdy and secure.</p>
+          <div class="item-meta">CAD • 2025</div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -62,6 +84,21 @@
 
   <!-- Scripts -->
   <script src="sketch.js"></script>
+  <!-- Modal Markup -->
+  <div class="modal" id="itemModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-content" role="document">
+      <button class="modal-close" id="modalClose" aria-label="Close">×</button>
+      <div class="modal-image-wrap">
+        <img id="modalImage" alt="">
+      </div>
+      <div class="modal-text">
+        <h3 id="modalTitle"></h3>
+        <p id="modalDescription"></p>
+        <div id="modalMeta" class="modal-meta"></div>
+      </div>
+    </div>
+  </div>
   <script>
     const filterTabs = document.querySelectorAll('.filter-tab');
     const portfolioItems = document.querySelectorAll('.portfolio-item');
@@ -93,6 +130,55 @@
       }
     `;
     document.head.appendChild(style);
+
+    // Modal behavior
+    const modal = document.getElementById('itemModal');
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const modalClose = document.getElementById('modalClose');
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDescription = document.getElementById('modalDescription');
+    const modalMeta = document.getElementById('modalMeta');
+
+    function openModalFromItem(item) {
+      const imgEl = item.querySelector('img');
+      const titleEl = item.querySelector('.item-title');
+      const descEl = item.querySelector('.item-description');
+      const metaEl = item.querySelector('.item-meta');
+
+      modalImage.src = imgEl ? imgEl.src : '';
+      modalImage.alt = imgEl ? imgEl.alt : '';
+      modalTitle.textContent = titleEl ? titleEl.textContent : '';
+      modalDescription.textContent = descEl ? descEl.textContent : '';
+      modalMeta.textContent = metaEl ? metaEl.textContent : '';
+
+      modal.setAttribute('aria-hidden', 'false');
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      modalClose.focus();
+    }
+
+    function closeModal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    portfolioItems.forEach(item => {
+      item.addEventListener('click', () => openModalFromItem(item));
+      item.addEventListener('keyup', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') openModalFromItem(item);
+      });
+      item.setAttribute('tabindex', '0');
+      item.setAttribute('role', 'button');
+      item.setAttribute('aria-label', 'Open details');
+    });
+
+    modalBackdrop.addEventListener('click', closeModal);
+    modalClose.addEventListener('click', closeModal);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
   </script>
 </body>
 </html>
