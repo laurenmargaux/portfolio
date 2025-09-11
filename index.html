@@ -23,14 +23,13 @@
     <!-- Filter Tabs -->
     <div class="filter-tabs">
       <button class="filter-tab active" data-filter="all">All</button>
-      <button class="filter-tab" data-filter="installations">Installations</button>
-      <button class="filter-tab" data-filter="research">Research</button>
-      <button class="filter-tab" data-filter="collaborations">Collaborations</button>
+      <button class="filter-tab" data-filter="jewelry">Jewelry Designs</button>
+      <button class="filter-tab" data-filter="passion">Passion Projects</button>
     </div>
 
     <!-- Portfolio Grid -->
     <div class="portfolio-grid" id="portfolioGrid">
-      <div class="portfolio-item" data-category="installations">
+      <div class="portfolio-item" data-category="jewelry">
         <div class="item-image">
           <img src="images/saltsilk.jpeg" alt="Salt & Silk necklace made with recycled glass beads and silk ribbon">
         </div>
@@ -41,7 +40,7 @@
         </div>
       </div>
 
-      <div class="portfolio-item" data-category="research">
+      <div class="portfolio-item" data-category="jewelry">
         <div class="item-image">
           <img src="images/petal.jpeg" alt="Silver jewelry piece titled Petal, work in progress.">
         </div>
@@ -52,7 +51,29 @@
         </div>
       </div>
 
-      <div class="portfolio-item" data-category="research">
+      <div class="portfolio-item" data-category="jewelry">
+        <div class="item-image">
+          <img src="images/white_ring.jpeg" alt="3D printed white ring made from PLA filament, inspired by floral motifs.">
+        </div>
+        <div class="item-content">
+          <h3 class="item-title">White Ring</h3>
+          <p class="item-description">3D printed ring made from white PLA filament. Still needs to go through a lost wax casting process to transform from PLA to metal. Inspired by floral motifs.</p>
+          <div class="item-meta">Ring • 2025</div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-category="jewelry">
+        <div class="item-image">
+          <img src="images/green_ring.jpeg" alt="3D printed green ring made from PLA filament, inspired by tile mosaics.">
+        </div>
+        <div class="item-content">
+          <h3 class="item-title">Green Ring</h3>
+          <p class="item-description">3D printed ring made from green PLA filament. Still needs to go through a lost wax casting process to transform from PLA to metal. Inspired by tile mosaics.</p>
+          <div class="item-meta">Ring • 2025</div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-category="passion">
         <div class="item-image">
           <img src="images/mold.jpeg" alt="A mini silicone mold made from a 3D printed flower rendered in Fusion 360.">
         </div>
@@ -63,7 +84,7 @@
         </div>
       </div>
 
-      <div class="portfolio-item" data-category="research">
+      <div class="portfolio-item" data-category="passion">
         <div class="item-image">
           <img src="images/pot.jpeg" alt="A mini pot holder made from plywood using Fusion 360 and a laser cutter with lap joints.">
         </div>
@@ -71,6 +92,21 @@
           <h3 class="item-title">Mini Pot Holder</h3>
           <p class="item-description">A mini pot holder made from plywood. My first CAD project made in Fusion 360 then sent to a laser cutter. Lap joints to make it sturdy and secure.</p>
           <div class="item-meta">CAD • 2025</div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-category="passion">
+        <div class="item-image audio-preview">
+          <div class="audio-icon">♪</div>
+          <div class="audio-info">
+            <h4>Final Project</h4>
+            <p>Audio Composition</p>
+          </div>
+        </div>
+        <div class="item-content">
+          <h3 class="item-title">Final Project</h3>
+          <p class="item-description">An original audio composition created for a final project. Features layered melodies and experimental sound design.</p>
+          <div class="item-meta">Audio • 2025</div>
         </div>
       </div>
     </div>
@@ -89,12 +125,34 @@
     <div class="modal-backdrop" id="modalBackdrop"></div>
     <div class="modal-content" role="document">
       <button class="modal-close" id="modalClose" aria-label="Close">×</button>
-      <div class="modal-image-wrap">
+      <div class="modal-image-wrap" id="modalImageWrap">
         <img id="modalImage" alt="">
+        <div class="audio-player" id="audioPlayer" style="display: none;">
+          <audio id="modalAudio" preload="metadata"></audio>
+          <div class="player-controls">
+            <button class="play-btn" id="playBtn">▶</button>
+            <div class="progress-container">
+              <div class="progress-bar" id="progressBar">
+                <div class="progress" id="progress"></div>
+                <div class="scrubber" id="scrubber"></div>
+              </div>
+              <div class="time-display">
+                <span id="currentTime">0:00</span>
+                <span id="duration">0:00</span>
+              </div>
+            </div>
+            <button class="volume-btn" id="volumeBtn">🔊</button>
+            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.1" value="1">
+          </div>
+        </div>
       </div>
       <div class="modal-text">
         <h3 id="modalTitle"></h3>
-        <p id="modalDescription"></p>
+        <p id="modalDescription" contenteditable="true" aria-label="Edit description" spellcheck="false"></p>
+        <div class="modal-actions">
+          <button class="modal-save" id="modalSave" aria-label="Save description">Save</button>
+          <span class="modal-hint" id="modalHint">Tip: edit text then click Save (or Cmd/Ctrl+S)</span>
+        </div>
         <div id="modalMeta" class="modal-meta"></div>
       </div>
     </div>
@@ -158,10 +216,64 @@
       modalClose.focus();
     }
 
+    let currentItem = null;
+
+    function openModalFromItem(item) {
+      const imgEl = item.querySelector('img');
+      const audioPreview = item.querySelector('.audio-preview');
+      const titleEl = item.querySelector('.item-title');
+      const descEl = item.querySelector('.item-description');
+      const metaEl = item.querySelector('.item-meta');
+
+      currentItem = item;
+      
+      // Show image or audio player
+      if (audioPreview) {
+        modalImage.style.display = 'none';
+        document.getElementById('audioPlayer').style.display = 'block';
+        // Set audio source based on title
+        const audio = document.getElementById('modalAudio');
+        audio.src = 'music/final project.m4a';
+      } else {
+        modalImage.style.display = 'block';
+        document.getElementById('audioPlayer').style.display = 'none';
+        modalImage.src = imgEl ? imgEl.src : '';
+        modalImage.alt = imgEl ? imgEl.alt : '';
+      }
+      
+      modalTitle.textContent = titleEl ? titleEl.textContent : '';
+      modalDescription.textContent = descEl ? descEl.textContent : '';
+      modalMeta.textContent = metaEl ? metaEl.textContent : '';
+
+      modal.setAttribute('aria-hidden', 'false');
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      modalClose.focus();
+    }
+
     function closeModal() {
       modal.classList.remove('open');
       modal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+        playBtn.textContent = '▶';
+        playBtn.classList.remove('playing');
+      }
+    }
+
+    function saveDescription() {
+      if (!currentItem) return;
+      const descEl = currentItem.querySelector('.item-description');
+      if (descEl) {
+        descEl.textContent = modalDescription.textContent.trim();
+        // brief saved feedback
+        const hint = document.getElementById('modalHint');
+        const original = hint.textContent;
+        hint.textContent = 'Saved';
+        setTimeout(() => { hint.textContent = original; }, 1200);
+      }
     }
 
     portfolioItems.forEach(item => {
@@ -179,6 +291,119 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeModal();
     });
+
+    // Save interactions
+    const modalSave = document.getElementById('modalSave');
+    modalSave.addEventListener('click', saveDescription);
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+        if (modal.classList.contains('open')) {
+          e.preventDefault();
+          saveDescription();
+        }
+      }
+    });
+
+    // Audio Player functionality
+    const audio = document.getElementById('modalAudio');
+    const playBtn = document.getElementById('playBtn');
+    const progressBar = document.getElementById('progressBar');
+    const progress = document.getElementById('progress');
+    const scrubber = document.getElementById('scrubber');
+    const currentTimeEl = document.getElementById('currentTime');
+    const durationEl = document.getElementById('duration');
+    const volumeBtn = document.getElementById('volumeBtn');
+    const volumeSlider = document.getElementById('volumeSlider');
+
+    let isDragging = false;
+
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    function updateProgress() {
+      if (audio.duration) {
+        const progressPercent = (audio.currentTime / audio.duration) * 100;
+        progress.style.width = progressPercent + '%';
+        scrubber.style.left = progressPercent + '%';
+        currentTimeEl.textContent = formatTime(audio.currentTime);
+      }
+    }
+
+    function updateDuration() {
+      if (audio.duration) {
+        durationEl.textContent = formatTime(audio.duration);
+      }
+    }
+
+    function togglePlay() {
+      if (audio.paused) {
+        audio.play();
+        playBtn.textContent = '⏸';
+        playBtn.classList.add('playing');
+      } else {
+        audio.pause();
+        playBtn.textContent = '▶';
+        playBtn.classList.remove('playing');
+      }
+    }
+
+    function seekTo(e) {
+      if (!audio.duration) return;
+      const rect = progressBar.getBoundingClientRect();
+      const percent = (e.clientX - rect.left) / rect.width;
+      audio.currentTime = percent * audio.duration;
+    }
+
+    function toggleMute() {
+      if (audio.muted) {
+        audio.muted = false;
+        volumeBtn.textContent = '🔊';
+        volumeSlider.value = audio.volume;
+      } else {
+        audio.muted = true;
+        volumeBtn.textContent = '🔇';
+      }
+    }
+
+    // Event listeners
+    playBtn.addEventListener('click', togglePlay);
+    progressBar.addEventListener('click', seekTo);
+    volumeBtn.addEventListener('click', toggleMute);
+    volumeSlider.addEventListener('input', (e) => {
+      audio.volume = e.target.value;
+      audio.muted = false;
+      volumeBtn.textContent = audio.volume > 0 ? '🔊' : '🔇';
+    });
+
+    // Scrubber dragging
+    scrubber.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (isDragging && audio.duration) {
+        const rect = progressBar.getBoundingClientRect();
+        const percent = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        audio.currentTime = percent * audio.duration;
+      }
+    });
+
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    // Audio events
+    audio.addEventListener('timeupdate', updateProgress);
+    audio.addEventListener('loadedmetadata', updateDuration);
+    audio.addEventListener('ended', () => {
+      playBtn.textContent = '▶';
+      playBtn.classList.remove('playing');
+    });
+
   </script>
 </body>
 </html>
